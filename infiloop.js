@@ -1,6 +1,6 @@
 import {
     autoRetry
-} from '/alain/helpers.js'
+} from 'helpers'
 
 let wnd
 let doc
@@ -8,7 +8,7 @@ let doc
 const argsSchema = [
     ['loop', 1], // Number of times to infiltrate
     ['quiet', false], // Passed through to infiltrate.js
-    ['faction', 'Tetrads'], // Faction to buy rep for
+    ['faction', 'none'], // Faction to buy rep for any faction put in --faction flag | OR | let the "none" value to make money with Sell on line 136 of this script
     ['target', 'Universal Energy'], // Company to target
 ]
 
@@ -119,9 +119,12 @@ export async function main(ns) {
 }
 
 async function infiltrate(ns, city, target, faction) {
-    if (city) {
-	// TODO: Use UI instead of singularity
-        ns.singularity.travelToCity(city)
+    try {
+  	eval("singularity()");	
+    		if (city) {
+			// TODO: Use UI instead of singularity
+        		ns.singularity.travelToCity(city)
+		}
     }
     try {
         await click(await findRetry(ns, "//div[(@role = 'button') and (contains(., 'City'))]"))
